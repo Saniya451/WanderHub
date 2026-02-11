@@ -1,0 +1,29 @@
+<% layout("/layouts/boilerplate")%>
+
+    
+        <h3>All Listings</h3>
+        <!-- <form method="GET" action="/listings/new">
+            <button>Create New Listing</button>
+        </form> -->
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+
+<% for(let listing of allListings) { %>
+    <div class="col">
+        <div class="card">
+            <% /* server normalized to provide listing.imageUrl */ %>
+                <% const imageDebug=listing && listing.image ? (typeof listing.image==='object' ?
+                    JSON.stringify(listing.image).replace(/\"/g, '&quot;' ) : String(listing.image).replace(/\"/g,'&quot;'))
+                    : '' ; %>
+                    <img src="<%= listing.imageUrl %>" data-image="<%= imageDebug %>" class="card-img-top"
+                        alt="listing_image" style="height: 15rem; object-fit: cover;"/>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <b><%= listing.title %></b><br/>
+                               <% if(listing.price) { %>&#8377; <%= listing.price.toLocaleString("en-IN") %>/night<% } %>
+
+                        </p>
+                    </div>
+        </div>
+    </div>
+    <% } %>
+        </div>
